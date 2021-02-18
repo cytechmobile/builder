@@ -26,7 +26,8 @@ RUN apt-get install -y bash git vim wget curl ca-certificates less groff jq open
 RUN pip3 install --upgrade pip
 
 # now install aws cli v2
-RUN mkdir -p /tmp/awsv2 && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tools/awscliv2.zip" && \
+RUN mkdir -p /tmp/awsv2 && \
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awsv2/awscliv2.zip" && \
   unzip /tmp/awsv2/awscliv2.zip && \
   chmod +x /tmp/awsv2/aws/install && \
   /tmp/awsv2/aws/install && \
