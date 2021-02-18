@@ -19,10 +19,18 @@ ENV TERM=xterm \
 
 RUN apt-get update && apt-get upgrade -y
 #telnet procps and python3-pip are required for aws cli
-RUN apt-get install -y bash git vim wget curl ca-certificates less groff jq openssh-client telnet procps python3-pip iputils-ping libxss1 gnupg postgresql-client
+RUN apt-get install -y bash git vim wget curl ca-certificates less groff jq openssh-client telnet procps python3-pip \
+  iputils-ping libxss1 gnupg postgresql-client zip unzip
 
-# now that we have python and pip install, use them to install the aws cli
-RUN pip3 install --upgrade pip && pip install --upgrade awscli
+# now that we have python and pip install, use them to upgrade pip
+RUN pip3 install --upgrade pip
+
+# now install aws cli v2
+RUN mkdir -p /tmp/awsv2 && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tools/awscliv2.zip" && \
+  unzip /tmp/awsv2/awscliv2.zip && \
+  chmod +x /tmp/awsv2/aws/install && \
+  /tmp/awsv2/aws/install && \
+  rm -rf /tmp/awsv2
 
 RUN rm -f /bin/sh && ln -s /bin/bash /bin/sh
 RUN mkdir -p /work
