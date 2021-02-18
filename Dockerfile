@@ -28,9 +28,11 @@ RUN pip3 install --upgrade pip
 # now install aws cli v2
 RUN mkdir -p /tmp/awsv2 && \
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awsv2/awscliv2.zip" && \
-  unzip /tmp/awsv2/awscliv2.zip && \
-  chmod +x /tmp/awsv2/aws/install && \
-  /tmp/awsv2/aws/install && \
+  cd /tmp/awsv2 && \
+  unzip ./awscliv2.zip && \
+  chmod +x ./aws/install && \
+  ./aws/install && \
+  cd / && \
   rm -rf /tmp/awsv2
 
 RUN rm -f /bin/sh && ln -s /bin/bash /bin/sh
