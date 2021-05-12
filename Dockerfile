@@ -9,7 +9,9 @@ ENV TERM=xterm \
   LANG=C.UTF-8 \
   JAVA_HOME=/opt/java \
   MAVEN_HOME=/opt/maven \
-  PATH=$PATH:/opt/java/bin:/opt/maven/bin \
+  FLUTTER_HOME=/opt/flutter \
+  FLUTTER_ROOT=/opt/flutter \
+  PATH=$PATH:/opt/java/bin:/opt/maven/bin:/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin \
   JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport" \
   DEBIAN_FRONTEND=noninteractive \
   DBUS_SESSION_BUS_ADDRESS=/dev/null \
@@ -57,3 +59,6 @@ RUN npm install --upgrade --global npm && npm install --upgrade --global @vue/cl
 # install docker-compose
 RUN curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose
+    
+# install flutter
+RUN mkdir -p /opt/flutter && git clone --depth 1 --branch 'stable' https://github.com/flutter/flutter.git /opt/flutter && flutter --version && flutter doctor
