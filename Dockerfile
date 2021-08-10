@@ -47,13 +47,15 @@ COPY --from=maven /usr/share/maven /opt/maven
 COPY --from=maven /usr/local/openjdk-11 /opt/java
 COPY --from=flyway /flyway /flyway
 
-# install google-chrome sources
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+# disabling installation of google-chrome sources, since it's not available on arm
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+#  echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+# RUN apt-get update && apt-get install google-chrome-stable
+
 # setup nodejs sources
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-# install xvfb, google-chrome and nodejs
-RUN apt-get update && apt-get install -y libgconf-2-4 xvfb google-chrome-stable nodejs
+# install xvfb, and nodejs
+RUN apt-get update && apt-get install -y libgconf-2-4 xvfb nodejs
 # upgrade npm and added required global libraries
 RUN npm install --upgrade --global npm && npm install --upgrade --global @vue/cli
 
