@@ -28,8 +28,9 @@ RUN apt-get install -y bash git vim wget curl ca-certificates less groff jq open
 RUN pip3 install --upgrade pip
 
 # now install aws cli v2
+# uname -m returns whether we're on x86_64 or aarch64
 RUN mkdir -p /tmp/awsv2 && \
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awsv2/awscliv2.zip" && \
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-$(uname -m).zip" -o "/tmp/awsv2/awscliv2.zip" && \
   cd /tmp/awsv2 && \
   unzip ./awscliv2.zip && \
   chmod +x ./aws/install && \
