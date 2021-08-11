@@ -54,8 +54,8 @@ COPY --from=flyway /flyway /flyway
 
 # setup nodejs sources
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-# install xvfb, and nodejs
-RUN apt-get update && apt-get install -y libgconf-2-4 xvfb nodejs
+# install xvfb, and nodejs and dependencies required for cypress: xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+RUN apt-get update && apt-get install -y nodejs xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 # upgrade npm and added required global libraries
 RUN npm install --upgrade --global npm && npm install --upgrade --global @vue/cli
 
